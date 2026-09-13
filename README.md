@@ -1,5 +1,7 @@
 # siyuan-to-trilium
 
+[English](./README_EN.md) | 中文
+
 将思源笔记的内容导出为可直接导入 [Trilium](https://github.com/zadam/trilium) 的 Markdown ZIP。
 
 > Trilium 自带的「恢复备份」使用未加密 SQLite 数据库。本仓库只生成 **带 `!!!meta.json` 的 Markdown ZIP**，不再启动、修改或产出任何 Trilium 数据库；导入由用户在自己的 Trilium 实例里完成。
