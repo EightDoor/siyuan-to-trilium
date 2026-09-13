@@ -10,3 +10,7 @@ dist/
 .venv/
 venv/
 .DS_Store
+
+# 本地运行日志
+startup-metrics.log
+*.log
