@@ -79,6 +79,16 @@ In the Trilium note tree, right-click any note → `Import into note` → `Markd
 
 The ZIP root contains `!!!meta.json`, which Trilium uses to reconstruct note hierarchy, Markdown type, and order.
 
+### 4. Clean up auto-generated metadata at the top of imported notes
+
+The YAML front matter from SiYuan (`title` / `date` / `lastmod`) is converted into
+an `<h2>` block at the top of each note during import. This repo ships an
+independent Trilium JS Backend script that removes that metadata after the import
+is complete.
+
+- Script: [`scripts/trilium-cleanup-imported-metadata.js`](./scripts/trilium-cleanup-imported-metadata.js)
+- Usage guide: [`docs/trilium-cleanup-imported-metadata.md`](./docs/trilium-cleanup-imported-metadata.md)
+
 ## Key design decisions
 
 - **`meta.files` lists notebooks at the top level**: Trilium's `getMeta` walks the ZIP path starting from `meta.files`. Wrapping everything in an extra `root` segment breaks the first notebook-name match and causes attachments like `.xlsx` to be treated as ordinary files, triggering spreadsheet parse errors.
@@ -100,6 +110,12 @@ src/
   trilium_archive.py    # !!!meta.json and ZIP generation
   progress.py           # Real-time progress reporting
   report.py             # migration-report.json output
+
+scripts/
+  trilium-cleanup-imported-metadata.js   # Trilium JS Backend: clean up imported top metadata
+
+docs/
+  trilium-cleanup-imported-metadata.md   # Usage guide for the cleanup script
 
 tests/
   test_siyuan.py

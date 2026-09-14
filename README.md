@@ -79,6 +79,15 @@ uv run python -m src.main \
 
 ZIP 根目录包含 `!!!meta.json`，Trilium 会按 meta 还原笔记层级、Markdown 类型与顺序。
 
+### 4. 清理导入后顶部的自动生成内容
+
+思源笔记的 YAML front matter（`title` / `date` / `lastmod`）在导入后会被
+Trilium 转换为文档顶部的 `<h2>` 标题块。本仓库提供独立的 Trilium JS Backend
+脚本，在导入完成后一次性清理这些元数据。
+
+- 脚本：[`scripts/trilium-cleanup-imported-metadata.js`](./scripts/trilium-cleanup-imported-metadata.js)
+- 使用文档：[`docs/trilium-cleanup-imported-metadata.md`](./docs/trilium-cleanup-imported-metadata.md)
+
 ## 关键设计
 
 - **`meta.files` 顶层笔记本列表**：Trilium 的 `getMeta` 从 `meta.files` 起逐段匹配 ZIP 路径，外层包一层 `root` 会让第一段笔记本名匹配失败，进而把 xlsx 等附件按普通文件处理触发 spreadsheet 解析报错。
@@ -100,6 +109,12 @@ src/
   trilium_archive.py    # !!!meta.json 与 ZIP 生成
   progress.py           # 实时进度上报
   report.py             # migration-report.json 输出
+
+scripts/
+  trilium-cleanup-imported-metadata.js   # Trilium JS Backend：清理导入后顶部元数据
+
+docs/
+  trilium-cleanup-imported-metadata.md   # 清理脚本使用文档
 
 tests/
   test_siyuan.py
